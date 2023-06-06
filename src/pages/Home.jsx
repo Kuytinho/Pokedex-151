@@ -8,22 +8,28 @@ import PokemonCard from "../components/PokemonCard";
 
 export const Home = () => {
     const [pokemons, setPokemons] = useState([]);
+    const [allPokemons, setAllPokemons] = useState([])
 
     const getAllPokemons = () => {
-      let endpoints = []
+      let endpoints = [];
       for (let i = 1; i <= 151; i++) {
-        endpoints.push(`https://pokeapi.co/api/v2/pokemon/${i}`)
+        endpoints.push(`https://pokeapi.co/api/v2/pokemon/${i}`);
       }
-      axios.all(endpoints.map((endpoint) => axios.get(endpoint))).then((res) => setPokemons(res));
+      axios.all(endpoints.map((endpoint) => axios.get(endpoint))).then((res) => {
+        setPokemons(res);
+        setAllPokemons(res);
+      });
     };
+    
 
     const searchPokemons = (search) => {
       if (search === "") {
         getAllPokemons();
       } else {
-        const searchedPokemons = pokemons.filter((pokemon) =>
-          pokemon.data.name.includes(search)
-        );
+        const lowercaseSearch = search.toLowerCase(); // Converter o termo de busca para letras minúsculas
+        const searchedPokemons = allPokemons.filter((pokemon) =>
+          pokemon.data.name.toLowerCase().includes(lowercaseSearch) // Converter os nomes dos pokémons para letras minúsculas e fazer a comparação
+    );
         setPokemons(searchedPokemons);
       }
     };
