@@ -100,6 +100,7 @@ export default function PokemonCard({name, url, id, shinyUrl, backUrl, backShiny
           >
             Shiny
         </Button>
+        <span style={{ margin: '0 0.5em' }}>|</span>
         <Button
           onClick={frontImage}
           disabled={front ? true : false}
